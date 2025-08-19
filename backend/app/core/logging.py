@@ -4,6 +4,7 @@ Logging configuration using structlog.
 
 import logging
 import sys
+from typing import Any
 
 import structlog
 from app.core.config import settings
@@ -40,7 +41,7 @@ def setup_logging() -> None:
     )
 
 
-def get_logger(name: str) -> structlog.stdlib.BoundLogger:
+def get_logger(name: str) -> Any:
     """Get a structured logger instance."""
     return structlog.get_logger(name)
 

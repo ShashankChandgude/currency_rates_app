@@ -1,7 +1,16 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, Numeric, String
 from sqlalchemy.orm import declarative_base, relationship
 
-Base = declarative_base()
+if TYPE_CHECKING:
+    from sqlalchemy.orm import DeclarativeBase
+
+    Base = DeclarativeBase
+else:
+    Base = declarative_base()
 
 
 class Currency(Base):

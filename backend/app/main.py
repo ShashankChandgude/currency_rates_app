@@ -2,6 +2,8 @@
 Main FastAPI application entry point.
 """
 
+from typing import Any, Dict
+
 from app.core.config import settings
 from app.core.logging import setup_logging
 from fastapi import FastAPI
@@ -40,7 +42,7 @@ if settings.ENVIRONMENT == "production":
 
 
 @app.get("/")
-async def root():
+async def root() -> Dict[str, Any]:
     """Root endpoint."""
     return {
         "message": "Currency Converter API",
@@ -50,7 +52,7 @@ async def root():
 
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> Dict[str, str]:
     """Health check endpoint."""
     return {"status": "healthy"}
 

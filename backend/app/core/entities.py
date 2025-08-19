@@ -1,10 +1,11 @@
 from datetime import datetime
+from typing import Any
 
 from app.core.value_objects import CurrencyCode, PositiveAmount
 
 
 class Currency:
-    def __init__(self, code: CurrencyCode, name: str):
+    def __init__(self, code: CurrencyCode, name: str) -> None:
         if not isinstance(code, CurrencyCode):
             raise ValueError("code must be a CurrencyCode")
         self._code = code
@@ -18,22 +19,22 @@ class Currency:
     def name(self) -> str:
         return self._name
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: Any) -> None:
         if hasattr(self, name):
             raise AttributeError(f"{self.__class__.__name__} is immutable")
         super().__setattr__(name, value)
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         if isinstance(other, Currency):
             return self.code == other.code and self.name == other.name
         return False
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Currency(code={self.code!r}, name={self.name!r})"
 
 
 class Provider:
-    def __init__(self, id: int, name: str, url: str):
+    def __init__(self, id: int, name: str, url: str) -> None:
         if not isinstance(id, int) or id < 0:
             raise ValueError("id must be a non-negative integer")
         self._id = id
@@ -52,12 +53,12 @@ class Provider:
     def url(self) -> str:
         return self._url
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: Any) -> None:
         if hasattr(self, name):
             raise AttributeError(f"{self.__class__.__name__} is immutable")
         super().__setattr__(name, value)
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         if isinstance(other, Provider):
             return (
                 self.id == other.id
@@ -66,7 +67,7 @@ class Provider:
             )
         return False
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Provider(id={self.id!r}, name={self.name!r}, url={self.url!r})"
 
 
@@ -79,7 +80,7 @@ class Rate:
         quote: Currency,
         value: PositiveAmount,
         provider: Provider,
-    ):
+    ) -> None:
         if not isinstance(value, PositiveAmount):
             raise ValueError("value must be a PositiveAmount")
         self._id = id
@@ -113,12 +114,12 @@ class Rate:
     def provider(self) -> Provider:
         return self._provider
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: Any) -> None:
         if hasattr(self, name):
             raise AttributeError(f"{self.__class__.__name__} is immutable")
         super().__setattr__(name, value)
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         if isinstance(other, Rate):
             return (
                 self.id == other.id
@@ -130,7 +131,7 @@ class Rate:
             )
         return False
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"Rate(id={self.id!r}, time={self.time!r}, base={self.base!r}, "
             f"quote={self.quote!r}, value={self.value!r}, provider={self.provider!r})"
